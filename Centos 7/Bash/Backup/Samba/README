@@ -1,0 +1,4 @@
+# generate.sh
+# This script generates simple bash script with rwx------ permissions.
+# Generated script mounts specified cifs share to provided mountpoint, runs rsync(as sudo) with -avP --delete flags.
+# After rsync is done it unmounts mounted cifs share.
