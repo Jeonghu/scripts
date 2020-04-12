@@ -1,0 +1,36 @@
+#!/bin/bash
+# Redone OnlyInAmerica :s version, uses disk only at final dumping stage.
+
+# Check first argument, if empty print usage and exit since user did'n manage to read this far.
+if [ -z $1 ]; then printf "Usage: $0 ip \n 	$(tput bold) ip $(tput sgr0) \n		Address where to forward dns queries\n	Example:	$0 127.0.0.1\n"; exit; fi
+
+# Declare header length and list location in that order
+vars=(	"1,13d" "-d mimetype=plaintext pgl.yoyo.org/adservers/serverlist.php?"
+		"1,30d" "winhelp2002.mvps.org/hosts.txt"
+		"1,24d" "adaway.org/hosts.txt"
+		"1,10d" "hosts-file.net/ad_servers.txt"
+		"1,9d" "hosts-file.net/emd.txt"
+		"1,9d" "hosts-file.net/exp.txt"
+		"1,9d" "hosts-file.net/fsa.txt"
+		"1,9d" "hosts-file.net/hjk.txt"
+		"1,9d" "hosts-file.net/mmt.txt"
+		"1,9d" "hosts-file.net/psh.txt"
+		"1,6d" "www.malwaredomainlist.com/hostslist/hosts.txt"
+		"1,5d" "adblock.mahakala.is")
+# Print something to let user know what we are doing
+echo "Doing downloady stuff..."
+# Looping over array
+for ((i=0; i < ${#vars[*]}; i=$i+2)); do
+# Reading retrieved lists into array (elements separated by newline, server get's RedQueen as user agent.
+# Lists are parsed by firstly removing first lines as marked in vars array ar every odd position, then removing all comment lines
+# Then all comments, windows newlines, and lastly keep only every second part (turns 0.0.0.0 address.suffix into address.suffix)
+IFS=$'\n' array+=($(eval curl -s -A RedQueen ${vars[i+1]} | sed ${vars[i]} | sed '/^#/ d' | sed 's/#.*//' | sed 's/\r//' | awk '{print $2}'));done
+# Do even more printing
+echo "Doing sorty stuff..."
+# Sort array and keep only unique entries
+IFS=$'\n' array=($(sort -u <<< "${array[*]}"))
+# And one last time with diagnostic stuff
+echo "Doing dumping stuff..."
+# Prints array elements to stdout with "address=/" prefix and "$1" suffix (Argument that user has fed me)
+printf "address=/%s/$1\n" "${array[@]}" > hostlist
+# Celebrate ending of this iteration.
