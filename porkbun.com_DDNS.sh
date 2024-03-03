@@ -8,7 +8,7 @@ url=https://porkbun.com/api/json/v3
 
 # You can schedule this script to run every 5 minutes by adding following line to your crontab (remember to make it executable chmod +x script.sh)
 # sudo -u someuser crontab -e
-# */5 * * * * /path/to/this/script.sh
+# */5 * * * * /path/to/this/script.sh &> /dev/null
 
 # Add our network WAN IP to variable
 wanIP="$( curl -s -X POST "$url/ping" -H "Content-Type: application/json" \
