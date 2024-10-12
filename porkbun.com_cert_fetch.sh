@@ -5,7 +5,7 @@ apiKey=
 secKey=
 domain=
 certDir=/path/to/cert/directory
-url=https://porkbun.com/api/json/v3
+url=https://api.porkbun.com/api/json/v3
 
 # You can schedule this script to run daily mon-sat @ 00:00am by adding following line to your crontab (remember to make it executable chmod +x script.sh)
 # sudo -u someuser crontab -e
