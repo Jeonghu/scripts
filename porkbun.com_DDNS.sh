@@ -4,7 +4,7 @@
 apiKey=
 secKey=
 domain=example.org
-url=https://porkbun.com/api/json/v3
+url=https://api.porkbun.com/api/json/v3
 
 # You can schedule this script to run every 5 minutes by adding following line to your crontab (remember to make it executable chmod +x script.sh)
 # sudo -u someuser crontab -e
