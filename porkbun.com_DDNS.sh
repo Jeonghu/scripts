@@ -12,7 +12,7 @@ url=https://api.porkbun.com/api/json/v3
 
 # Add our network WAN IP to variable
 wanIP="$( curl -s -X POST "$url/ping" -H "Content-Type: application/json" \
-  --data "{ \"apikey\": \"$apiKey\", \"secretapikey\": \"$secKey\" }" | grep -oE '[0-9.]*' )"
+  --data "{ \"apikey\": \"$apiKey\", \"secretapikey\": \"$secKey\" }" | grep -oE '[0-9.]*' | grep -m1 "" )"
 
 # Alternative way of getting our WAN IP by abusing opendns
 #wanIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
